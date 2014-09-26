@@ -91,4 +91,9 @@ public class Util {
 	}
 	
 	
+	public static void cancelAllLocalNotifications()
+	{
+		LocalNotificationManager.CancelAllAlarms(UnityPlayer.currentActivity);
+	}
+	
 }
