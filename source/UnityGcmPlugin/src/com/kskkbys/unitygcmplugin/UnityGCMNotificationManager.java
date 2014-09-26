@@ -1,9 +1,6 @@
 package com.kskkbys.unitygcmplugin;
 
 import com.unity3d.player.UnityPlayer;
-import com.unity3d.player.UnityPlayerProxyActivity;
-
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;

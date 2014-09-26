@@ -2,7 +2,6 @@ package com.kskkbys.unitygcmplugin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,4 +83,12 @@ public class Util {
 	{
 		UnityGCMNotificationManager.showNotification(UnityPlayer.currentActivity, title, text, ticker, null, sound, when);
 	}
+	
+	
+	public static void createLocalNotification(final String title, final String text, final String ticker, final String sound, final int offsetInMillis)
+	{
+		LocalNotificationManager.CreateAlarmEvent(UnityPlayer.currentActivity, title, text, ticker, sound, offsetInMillis);
+	}
+	
+	
 }

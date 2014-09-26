@@ -126,6 +126,7 @@ build/Packager/Assets/readme.txt
 *.csproj
 *.pidb
 *.sln
+*.metadata*
 
 *.apk
 source/UnityGcmPlugin/bin
