@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
+import com.unity3d.player.UnityPlayer;
 
 /**
  * GCMIntentService.<br>
@@ -23,7 +24,7 @@ public class UnityGCMIntentService extends GCMBaseIntentService {
 	private static final String TAG = UnityGCMIntentService.class.getSimpleName();
 
 	private static final String ON_ERROR = "OnError";
-	private static final String ON_MESSAGE = "OnMessage";
+	public static final String ON_MESSAGE = "OnMessage";
 	private static final String ON_REGISTERED = "OnRegistered";
 	private static final String ON_UNREGISTERED = "OnUnregistered";
 	
@@ -47,7 +48,7 @@ public class UnityGCMIntentService extends GCMBaseIntentService {
 				Log.v(TAG, key + ": " + bundle.get(key));
 				json.put(key, bundle.get(key));
 			}
-			Util.sendMessage(ON_MESSAGE, json.toString());
+			sendOrSaveMessage(json);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -72,12 +73,27 @@ public class UnityGCMIntentService extends GCMBaseIntentService {
 			} catch (JSONException e) {
 				ticker = contentTitle; // If no ticker specified, use title
 			}
-			UnityGCMNotificationManager.showNotification(this, contentTitle, contentText, ticker);
+			String customData = null;
+			try {
+				customData = json.getString("custom_data");
+			} catch (JSONException e) {
+			}
+			UnityGCMNotificationManager.showNotification(this, contentTitle, contentText, ticker, customData);
 		} catch (JSONException e) {
 			// Title is mandatory, do not display in status bar
 			Log.v(TAG, "No content_title specified, not showing anything in Android status bar");
 		}
 	}
+
+	
+	void sendOrSaveMessage(JSONObject josn)
+	{
+		if(UnityPlayer.currentActivity != null)
+			Util.sendMessage(ON_MESSAGE, josn.toString());
+		else
+			Util.saveMessage(josn);
+	}
+	
 
 	@Override
 	protected void onRegistered(Context context, String registrationId) {
